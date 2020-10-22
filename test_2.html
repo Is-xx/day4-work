@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div id="test">
+
+    <h3>这是页面的最上面</h3>
+    <router-link to="/one">访问首页</router-link>
+    <router-link to="/two">访问用户</router-link>
+    <hr>
+    <router-view></router-view>
+
+</div>
+
+<script src="js/vue.min.js"></script>
+<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+<script>
+
+    let one = {
+        template: `
+        <div>
+        <h4>这是index页面</h4>
+        <h3>欢迎访问信息系统页面</h3>
+</div>
+        `
+    }
+    let two = {
+        template: `
+          <div>
+          <h3>用户列表</h3>
+          <table border="2">
+            <tr>
+              <td>ID</td>
+              <td>姓名</td>
+              <td>生日</td>
+              <td>操作</td>
+            </tr>
+            <tr v-for="user in users" :key="user.id">
+              <td>{{ user.id }}</td>
+              <td>{{ user.username }}</td>
+              <td>{{ user.birthday }}</td>
+              <td>删除 | 更新</td>
+            </tr>
+          </table>
+          </div>
+        `,
+        data() {
+            return {
+                users: [
+                    {'id': 1, username: '小黑', birthday: '2010-11-06'},
+                    {'id': 2, username: '小王', birthday: '2010-07-23'},
+                    {'id': 3, username: '小白', birthday: '2008-04-15'},
+                    {'id': 4, username: '小松鼠', birthday: '2010-05-06'},
+                    {'id': 5, username: '小喇叭', birthday: '2000-12-06'},
+                ]
+            }
+        }
+    }
+    let myRouter = new VueRouter({
+        routes: [
+            {path: '/one', component: one},
+            {path: '/two', component: two},
+            {path: '/', redirect: '/one'},
+            {path: '/*', redirect: '/one'},
+        ]
+    })
+    new Vue({
+        el: '#test',
+        data: {},
+        router: myRouter,
+    })
+
+</script>
+
+</body>
+</html>
